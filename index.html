@@ -3,8 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="description"
-        content="Predictable Scale: Part I — Optimal Hyperparameter Scaling Law in
-        Large Language Model Pretraining">
+        content="Farseer: A Refined Scaling Law in Large Language Models">
   <!-- <meta name="keywords" content="Nerfies, D-NeRF, NeRF"> -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Predictable Scale: Part I</title>
@@ -110,13 +109,13 @@
               <span class="author-name">Wenzhen Zheng</span><sup style="font-size: 0.6rem;">1</sup>
             </span>
             <span class="author-block">
-              <span class="author-name">Jingcheng Hu</span><sup style="font-size: 0.6rem;">1,3</sup>
-            </span>
-            <span class="author-block">
               <span class="author-name">Qiufeng Wang</span><sup style="font-size: 0.6rem;">1</sup>
             </span>
             <span class="author-block">
-              <span class="author-name">Hanshan Zhang</span><sup style="font-size: 0.6rem;">1</sup>
+              <span class="author-name">Zhenyu Ding</span><sup style="font-size: 0.6rem;">3</sup>
+            </span>
+            <span class="author-block">
+              <span class="author-name">Haoying Wang</span><sup style="font-size: 0.6rem;">3</sup>
             </span>
             <span class="author-block">
               <span class="author-name">Zili Wang</span><sup style="font-size: 0.6rem;">1</sup>
@@ -126,7 +125,7 @@
               <span class="author-name">Shijie Xuyang</span><sup style="font-size: 0.6rem;">1,2</sup>
             </span>
             <span class="author-block">
-              <span class="author-name">Yuantao Fan</span><sup style="font-size: 0.6rem;">1</sup>
+              <span class="author-name">Ning Ding</span><sup style="font-size: 0.6rem;">3</sup>
             </span>
             <span class="author-block">
               <span class="author-name">Shuigeng Zhou</span><sup style="font-size: 0.6rem;">2</sup>
@@ -141,7 +140,7 @@
           <div class="institutional-affiliations" style="text-align: center; margin-top: 0.25rem; font-size: 0.9rem;">
               <span style="margin-right: 1rem;"><sup style="font-size: 0.6rem;">1</sup>StepFun</span>
               <span style="margin-right: 1rem;"><sup style="font-size: 0.6rem;">2</sup>Fudan University</span>
-              <span style="margin-right: 1rem;"><sup style="font-size: 0.6rem;">3</sup>Tsinghua University</span>
+              <span style="margin-right: 1rem;"><sup style="font-size: 0.6rem;">3</sup>Xi’an Jiaotong University</span>
               <span><sup style="font-size: 0.6rem;">4</sup>Megvii Technology</span>
           </div>
           
@@ -149,7 +148,7 @@
             <div class="publication-links">
               <!-- PDF Link. -->
               <span class="link-block">
-                <a href="https://arxiv.org/pdf/2503.04715"
+                <a href="https://arxiv.org/pdf/2506.10972"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fas fa-file-pdf"></i>
@@ -158,7 +157,7 @@
                 </a>
               </span>
               <span class="link-block">
-                <a href="https://arxiv.org/abs/2503.04715"
+                <a href="https://arxiv.org/abs/2506.10972"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="ai ai-arxiv"></i>
@@ -168,7 +167,7 @@
               </span>
               <!-- Code Link. -->
               <span class="link-block">
-                <a href="https://github.com/step-law/steplaw"
+                <a href="https://github.com/Farseer-Scaling-Law/Farseer"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fab fa-github"></i>
@@ -178,7 +177,7 @@
               </span>
               <!-- HF Link. -->
               <span class="link-block">
-                <a href="https://huggingface.co/StepLaw"
+                <a href="https://huggingface.co/Farseer"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                     <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" width="24" height="24" />
@@ -187,7 +186,7 @@
                 </a>
               </span>
               <!-- Dataset Link. -->
-              <span class="link-block">
+              <!-- <span class="link-block">
                 <a href="https://wandb.ai/billzid/predictable-scale"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
@@ -195,7 +194,7 @@
                   </span>
                   <span>Wandb</span>
                 </a>
-              </span>
+              </span> -->
             </div>
 
           </div>
@@ -211,15 +210,11 @@
         <figure class="image mb-5"> 
           <img src="./static/images/img1.png" alt="img1">
           <figcaption class="mt-2" style="color: #333; font-size: 0.875rem; line-height: 1.4">
-            <strong style="font-weight: 900; color: #000;">Figure 1. The hyperparameter space for models 
-            with 400M parameters trained on 40B tokens (left) and 1B parameters trained on 100B tokens (right).</strong>
-            All contour lines shown here represent the genuinely converged Train Smooth Loss obtained from small models 
-            trained from scratch. The contour lines in the two figures respectively originate from two groups 
-            totaling 240 small models with different hyperparameters (Grid Search) trained end-to-end. 
-            The Global Minimum is derived from the 120 small models as the one with the minimal final Train Smooth Loss. 
-            The contour lines illustrate the relative distance from the Global Minimum in terms of the final loss. 
-            Data points exceeding +2% are excluded from the visualization. 
-            All mentioned methods have been converted to predict OptimalToken-Wise BatchSize.
+            <strong style="font-weight: 900; color: #000;">Figure 1.</strong>
+            (a) Average relative error (BPC) vs.\ model size $N$ for \textit{Farseer} (red) and Chinchilla (blue). Chinchilla, lacking high-order cross terms, fits only near the central $N$ and its error diverges as model size grows.
+            In contrast, \textbf{\textit{Farseer}'s error is 232\% lower within the fitted range and remains stable across the full $N$ range.}
+            (b) Chinchilla\text{'}s rule of thumb ($D/N\approx20$) is valid only at moderate budgets ($C\approx10^{20}\!-\!10^{21}$), but it underestimates the requirements for larger scale regimes. 
+            In contrast, our analysis predicts a steadily increasing optimal $D/N$, which is consistent with the actual training configurations used in recent large language models (e.g., Llama 3.1,  Qwen3, etc.)
           </figcaption>
         </figure>
       </div>
@@ -237,20 +232,21 @@
           <h2 class="title is-3 elegant-title">Abstract</h2>
           <div class="content has-text-justified">
             <p>
-              We first present the unified optimal hyperparameter scaling laws, termed Step Law, 
-              that generalizes across diverse model shapes, architectures, and data distributions. 
+              We present <b>Farseer</b>, a novel and unified scaling law that offers unprecedented predictive accuracy 
+              for Large Language Models (LLMs). Our findings demonstrate remarkable extrapolation capabilities, 
+              <b>reducing prediction error by 433%</b> compared to Chinchilla's law and enabling highly accurate forecasts of 
+              large-scale performance from small-scale experiments.
             </p>
             <p>
-              Our findings demonstrate remarkable accuracy, with estimated values on test sets deviating 
-              by only 0.09% from the globally optimal LLM performance identified through exhaustive search.
+              This research represents a significant computational investment, 
+              utilizing approximately <b>3 million NVIDIA H100 GPU hours</b> to train a comprehensive suite of 
+              nearly <b>1,000 LLMs</b> from scratch. By systematically constructing the model loss surface L(N,D), 
+              Farseer provides a robust and generalizable framework that bridges the critical scaling gap 
+              between experimentation and production.
             </p>
             <p>
-              This research entails a significant computational investment, 
-              utilizing nearly <b>one million NVIDIA H800 GPU hours</b> to train <b>3,700 LLMs</b> 
-              of varying sizes and hyperparameters from scratch, consuming approximately 
-              <b>100 trillion tokens</b> in total. To support reproducibility and advance the field for LLM pre-training, 
-              we will progressively release all loss measurements and model checkpoints through our designated repository.
-              The universal, plug-and-play <a href = "#steplawtool">optimal hyperparameter tool</a> is provided for the community.
+              To support reproducibility and advance the field of LLM pre-training, 
+              we will progressively release our full dataset of loss measurements and checkpoints.
             </p>
           </div>
         </div>
@@ -350,13 +346,13 @@
 
 <section class="section" style="margin: 0.5rem 0 !important; padding: 0.5rem 0 !important;">
   <div class="container is-max-desktop">
-    <h2 class="title is-3 elegant-title">Loss Landscape Convexity</h2>
+    <h2 class="title is-3 elegant-title">Robustness and Data Generalization</h2>
     <div class="content-header mb-4">
       <div class="column is-full-width">
         <p class="subtitle is-6 has-text-grey-dark has-text-left" 
            style="line-height: 1.5; font-size: 1.05rem;">
-          We discover and demonstrate the convexity property of the loss landscape under fixed parameter count 
-          and data size conditions. This provides fundamental insights into hyperparameter optimization.
+           Farseer's prediction error consistently decreases as the amount of fitting data increases, demonstrating strong robustness. 
+           It also exhibits excellent generalization across different data distributions.
         </p>
       </div>
     </div>
@@ -365,31 +361,38 @@
         <figure class="image mb-5"> 
           <img src="./static/images/img2.png" alt="img2">
           <figcaption class="mt-2" style="color: #333; font-size: 0.875rem; line-height: 1.4">
-            <strong style="font-weight: 900; color: #000;">Figure 2. Learning Rate vs. Batch Size Loss Landscape Analysis 
-            for 1B Model (Trained on 100B Tokens) combining empirical scatter data (left) and reconstructed 3D surfaces (right):</strong> 
-
-            Each solid point represents the converged Train Smoothed Loss from 120 small models trained from scratch. 
-            To visualize the convexity, researchers constructed a 3D coordinate system (right) with the x-axis as Learning Rate, 
-            y-axis as Batch Size, and z-axis as Loss. Horizontal and vertical cross-sections of 
-            this 3D space reveal loss patterns: the upper-left subplot shows the final converged Train Smoothed Loss 
-            under fixed Learning Rates with varying Batch Sizes, while the lower-left subplot displays the loss under 
-            fixed Batch Sizes with varying Learning Rates. 
-            A pronounced convexity is observed with a relatively flat region at the bottom of the convex basin 
-            suggesting that the optimal combinations of Learning Rate and Batch Size likely occupy a broad range 
-            rather than a single sharp minimum.
+            <strong style="font-weight: 900; color: #000;">Figure 2. Robustness and data distribution generalizability of \textit{Farseer}. </strong> 
+            (a) Relative error on excluded 6.4 B models as a function of the maximum model size included in the fitting data, 
+            assessing robustness to fitting data volume. 
+            (b) Relative error on excluded 3.2 B models trained with an English\text{-}Chinese data recipe, 
+            demonstrating structural generalizability to different data mixes. 
+            Circle size and adjacent numbers indicate the number of model\text{-}size points used for fitting in each case.
           </figcaption>
         </figure>
       </div>
     </div>
-
-    <h2 class="title is-3 elegant-title">Generalization of the Step Law</h2>
     <div class="content-header mb-4">
       <div class="column is-full-width">
         <p class="subtitle is-6 has-text-grey-dark has-text-left" 
            style="line-height: 1.5; font-size: 1.05rem;">
-           We conduct a comprehensive investigation into how different model architectures 
-           (specifically varying combinations of width and depth dimensions) influence scaling laws. 
-           Our findings demonstrate that Step Law exhibits a high degree of stability across all architectural configurations.
+          <b>Left Figure:</b> The prediction error for Farseer decreases significantly as the amount of fitting data increases. 
+          For instance, when the upper bound for model size in the fitting data is expanded from 1.9B to 5.4B parameters, 
+          the relative prediction error for a 6.4B model drops from 0.6% to 0.058%, showcasing its robustness to data quantity.
+          <b>Right Figure:</b> On bilingual English-Chinese (EN-ZH) data, as the amount of fitting data increases, 
+          the prediction error for a 3.2B model converges to 0.076%. This indicates its generalization capability across different data distributions, 
+          effectively capturing the scaling patterns of cross-lingual data.
+        </p>
+      </div>
+    </div>
+
+
+    <h2 class="title is-3 elegant-title">Extrapolation</h2>
+    <div class="content-header mb-4">
+      <div class="column is-full-width">
+        <p class="subtitle is-6 has-text-grey-dark has-text-left" 
+           style="line-height: 1.5; font-size: 1.05rem;">
+           <b>Farseer's</b> average relative error is just 0.50%, 
+           whereas the Chinchilla scaling law exhibits an average relative error of 2.68%, a 433% increase.
         </p>
       </div>
     </div>
@@ -398,22 +401,17 @@
         <figure class="image mb-5"> 
           <img src="./static/images/img3.png" alt="img3">
           <figcaption class="mt-2" style="color: #333; font-size: 0.875rem; line-height: 1.4">
-            <strong style="font-weight: 900; color: #000;">Figure 3. Topological Invariance Across Varied Model Shape.</strong>
-            This figure demonstrates the topological invariance of optimal hyperparameters across 
-            different model shapes under fixed non-vocabulary parameter counts and training token budgets. 
-            Researchers systematically varied model architectures by adjusting layer counts (14/10/8 layers from left to right), 
-            hidden dimensions (1280/1536/2048), and six FFN multiples (FFN_media_dim/model_dim ranging from 1.1x to 6.25x). 
-            Red five-pointed stars denote predictions from the Step Law method, 
-            which consistently identifies near-global-minimum regions across all six model shapes. 
-            While the Step Law predictions remain stable, the positional shifts of the convex basin's bottom region 
-            across different architectures reveal shape-dependent variations in optimal hyperparameter configurations, 
-            despite preserved topological characteristics in the loss landscape.
+            <strong style="font-weight: 900; color: #000;">Figure 3. Extrapolation of \textit{Farseer}.</strong>
+            Blue circles represent the grid of $$(N,D$$ employed to fit. 
+            Red stars denote validation points beyond that distribution, including a 25.1 B model, larger dataset sizes, 
+            and off-grid combinations. Annotated percentages give the relative errors of each extrapolated point.
           </figcaption>
         </figure>
       </div>
     </div>
 
 
+    <h2 class="title is-3 elegant-title">Comparison with Chinchilla's Fitting Formula</h2>
     <div class="content-header mb-4">
       <div class="column is-full-width">
         <p class="subtitle is-6 has-text-grey-dark has-text-left" 
@@ -429,34 +427,29 @@
         <figure class="image mb-5">
           <img src="./static/images/img4.png" alt="img4">
           <figcaption class="mt-2" style="color: #333; font-size: 0.875rem; line-height: 1.4">
-            <strong style="font-weight: 900; color: #000;">Figure 4. Validation loss landscapes of MoE models under varying sparsity ratios N<sub>a</sub>/N.</strong>
+            <strong style="font-weight: 900; color: #000;">Figure 4.</strong>
             <!-- Left: Low sparsity N<sub>a</sub>/N=0.27. Middle: Medium sparsity N<sub>a</sub>/N=0.58. 
             Right: Medium sparsity at D=8.0B. 
             Our method consistently approximates global minima across sparsity regimes.
              -->
-            The left panel shows low sparsity (NA/N = 0.27), the center illustrates
-            moderate sparsity ( N<sub>a</sub>/N = 0.58, D/N = 10), and the right depicts moderate sparsity
-            with reduced training tokens (N N<sub>a</sub>/N = 0.58, D/N = 4). Researchers trained 45 small
-            models from scratch for each configuration across different sparsity levels and D/N
-            ratios, totaling 495 distinct MoE models with varying sparsity, hyperparameters, and D/N
-            settings, to derive ground-truth Global Minimum Train Smepothed Loss values. Except for
-            one D/N = 1 experiment, Step Law predictions consistently fall within +0.5% of the
-            global minimum across all configurations, with most within +0.25%, robustly validating the
-            method. Detailed results are provided in the appendix.
+             Empirical BPC values (Ground Truth) are plotted alongside fits obtained from \textit{Farseer} and Chinchilla. 
+             \textit{Farseer} yields predictions that lie almost exactly on the ground truth curve, 
+             whereas Chinchilla's fit exhibits systematic under‐ and over‐estimations, particularly at small and large $D$.
           </figcaption>
         </figure>
       </div>
     </div>
     
 
+    <h2 class="title is-3 elegant-title">Comparison of Optimal Compute Allocation</h2>
     <div class="content-header mb-4">
       <div class="column is-full-width">
         <p class="subtitle is-6 has-text-grey-dark has-text-left" 
            style="line-height: 1.5; font-size: 1.05rem;">
-           Our experiment further validates the consistency of Step Law across diverse data distributions: 
-           whether in English-dominated, Chinese-English mixed, Code-English mixed, or Code-dominant, 
-           the Step Law demonstrates stable performance. This provides robust support for its 
-           practical applications in multilingual and multitask settings.
+           Under the condition C≈6ND, Chinchilla recommends a fixed D/N≈20, 
+           which is only applicable for medium compute budgets ($10^20−10^21FLOPs).
+           Farseer,however, predict that the optimal D/N ratio continuously increases with the compute budget, 
+           which is fundamentally consistent with the training configurations of large models like Llama 3.1 and Qwen 3.
         </p>
       </div>
     </div>
@@ -465,58 +458,53 @@
         <figure class="image mb-5"> 
           <img src="./static/images/img5.png" alt="img5">
           <figcaption class="mt-2" style="color: #333; font-size: 0.875rem; line-height: 1.4">
-            <strong style="font-weight: 900; color: #000;">Figure 5. Configuration Space Analysis under Different Data Recipes:</strong>
-            left panel shows bilingual data, center panel combines code and mathematical data, 
+            <strong style="font-weight: 900; color: #000;">Figure 5.</strong>
+            <!-- left panel shows bilingual data, center panel combines code and mathematical data, 
             and right panel focuses on code-dominated data. 
             Each configuration trained 45 models from scratch with identical settings except batch size and learning rate, 
             totaling 135 models across three data distributions. The Global Minimum represents the ground-truth 
             lowest Final Train Smoothed Loss obtained through grid search, while Step Law-predicted optimal 
             batch sizes and learning rates consistently fall within +0.125% to 0.25% of the minimum loss across 
-            all data recipes.
+            all data recipes. -->
             <!-- Our method demonstrates stable convergence patterns across varying data compositions. -->
           </figcaption>
         </figure>
       </div>
     </div>
 
-    <h2 class="title is-3 elegant-title">Experimental Details</h2>
-    <div class="content-header mb-4">
-      <div class="column is-full-width">
-        <p class="subtitle is-6 has-text-grey-dark has-text-left" 
-           style="line-height: 1.5; font-size: 1.05rem;">
-           Our comparative analysis reveals that learning rate scheduling strategies significantly 
-           impact optimal hyperparameter selection. The experiment further uncovers critical distinctions 
-           between traditional learning rate decay and fixed minimum learning rate schemes.
-        </p>
-      </div>
-    </div>
+    <h2 class="title is-3 elegant-title">Point, Line, and Surface Comparison</h2>
+
     <div class="columns is-centered mb-6">
       <div class="column is-full-width">
         <figure class="image mb-5"> 
           <img src="./static/images/img6.png" alt="img6">
           <figcaption class="mt-2" style="color: #333; font-size: 0.875rem; line-height: 1.4">
-            <strong style="font-weight: 900; color: #000;">Figure 6. Comparison of learning rate schedules.</strong> These contour
-            plots illustrate two distinct learning rate schedules. <strong style="font-weight: 900; color: #000;">Blue
-            contours</strong> represent the <i>conventional decay schedule</i>, where the
-            minimum learning rate min_lr is set to one-tenth of the maximum
-            learning rate max_lr/10. <strong style="font-weight: 900; color: #000;">Red contours</strong> depict our
-            proposed <i>final learning rate schedule</i>, with a constant
-            minimum learning rate of min_lr = 10<sup>-5</sup>. 
-            All the contours present results from grid searches conducted over identical batch size/learning rate ranges 
-            using 120 independently trained models each. The red and blue Global Minimum markers denote ground-truth 
-            minimal Final Train Smoothed Loss values in their respective configurations. When switching to max_lr/10 settings, 
-            the blue markers shift <strong style="font-weight: 900; color: #000;">
-            leftward (toward smaller learning rates) and upward (toward larger batch sizes) </strong>
-            in the parameter space. Absolute value comparisons reveal models with min_lr=1e-5 consistently 
-            achieve lower converged losses than those using max_lr/10 configurations. All ground-truth values 
-            corresponding to these experiments will be progressively open-sourced.
+            <strong style="font-weight: 900; color: #000;">Figure 6.</strong>
+            \textit{Farseer}\text{'}s normalized 3D surface of relative BPC difference between datasets with 85\% and 50\% 
+            English proportions. The translucent pink plane marks $\Delta=0$: above it, the 50\%\text{-}English configuration 
+            outperforms; below it, the 85\%\text{-}English configuration outperforms. Green squares show small\text{-}scale 
+            experiments at individual $(N,D)$ points, and the yellow dashed curve connects several such points—conclusions 
+            from these point/line comparisons do not hold at larger scales.
           </figcaption>
         </figure>
       </div>
     </div>
-
-
     <div class="content-header mb-4">
+      <div class="column is-full-width">
+        <p class="subtitle is-6 has-text-grey-dark has-text-left" 
+           style="line-height: 1.5; font-size: 1.05rem;">
+           Regions above the plane indicate that the 50\% English mixture yields lower error, 
+           while regions below favor the 85\% mixture. Green squares denote individual point comparison experiments 
+           at specific \((N,D)\) coordinates, and the yellow line connects several such points for a line comparison. 
+           Although these smaller scale analyses can suggest one mixture is better, 
+           the surface comparison reveals how those conclusions can reverse at larger scales. 
+           \textit{Farseer}\text{'}s exhibits power for low-cost, high-fidelity extrapolation across 
+           any two training recipes or model designs.  
+        </p>
+      </div>
+    </div>
+
+    <!-- <div class="content-header mb-4">
       <div class="column is-full-width">
         <p class="subtitle is-6 has-text-grey-dark has-text-left" 
            style="line-height: 1.5; font-size: 1.05rem;">
@@ -543,7 +531,7 @@
           </figcaption>
         </figure>
       </div>
-    </div>
+    </div> -->
   </div>
 </section>
 
